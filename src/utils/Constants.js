@@ -1,0 +1,2 @@
+export const FETCH_CARTS = 'FETCH_CARTS'
+export const FETCH_PRODUCT = 'FETCH_PRODUCT'

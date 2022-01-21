@@ -5,15 +5,16 @@ import { connect } from 'react-redux';
 
 const Carts = ({ carts, location, match, fetchCarts }) => {
 
-    console.log(location)
-    console.log(match)
+    const { childrenNames } = location.state
+
+    console.log(location.state);
 
     React.useEffect(() => {
         fetchCarts()
     }, [])
 
     return (
-      <CartList carts={carts} />
+      <CartList carts={carts} childrenNames={childrenNames} />
   );
 };
 

@@ -7,8 +7,7 @@ class ChildrenForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { childrenNames: ['', '', '', '', '', ''] };
-        this.onGetCarts = this.onGetCarts.bind(this);
+        this.state = { childrenNames: ['', '', '', '', ''] };
         this.onNameChange = this.onNameChange.bind(this);
     }
 

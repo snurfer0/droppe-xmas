@@ -1,6 +1,6 @@
-import { CSpinner } from '@coreui/react'
 import React from 'react'
+import '../../assets/css/loading.scss'
 
-const Loading = () => <CSpinner color="dark" style={{ position: "absolute", top: "50%", left: "50%" }} />
+const Loading = () => <div class="loader"></div>
 
 export default Loading

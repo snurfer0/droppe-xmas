@@ -16,67 +16,51 @@ $color-below-image: #ccc;
 	-o-transition: transform $delay;
 	transition: transform $delay;
 }
-.wrapper{
-  margin:auto;
+.products-grid {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  margin-top: 15px;
 }
 .product{
-  position:relative;
-  width:640px;
-  background-color:#fff;
-  margin:auto;
-  overflow:hidden;
-  margin-bottom: 20px;
+  width:300px;
   > div{
     position:relative;
     z-index:10;
   }
-  .title{
+  .title-wrapper {
     background-color:#333;
+    text-align: center;
+    height: 45px;
     color:#fff;
     padding:10px;
     font-size:18px;
-    z-index:20;
+    display: table;  
+    overflow: hidden;
+    width: 285px;
+  }
+  .title{
+    display: table-cell; 
+    vertical-align: middle;
+    height: 90px;
   }
   .text{
-    text-align:left;
-    width:49.5%;
     display:inline-block;
     vertical-align:middle;
     color:#333;
     font-weight: 300;
     padding: 20px 0;
-    .code{
-      padding: 0 20px;
-      font-size:11px;
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
+    
     .description{
+      text-align: justify;
       padding: 0 20px;
       margin-bottom: 10px;
       color: #757575;
-    }
-    .review{
-      font-size:12px;
-      padding:0 20px;
-      > span{
-        vertical-align:middle;
-      }
-      > span.star-icon{
-        width:20px;
-        height:20px;
-        display:inline-block;
-       }
-      .star-icon{
-        @include star-icon();
-      }
-      .star-disable{
-        opacity:0.5;
-      }
+      height: 180px;
     }
     .price{
+      float: right;
       padding: 0 20px;
-      font-size: 2.5em;
+      font-size: 1em;
       margin-bottom:10px;
     }
     .shop-actions{
@@ -84,39 +68,22 @@ $color-below-image: #ccc;
       button{
         width: 100%;
         vertical-align:middle;
-        background-color: #ffdd00;
+        background-color: rgb(241, 38, 38);
         border:none;
         box-shadow: 0 5px 5px -2px rgba(0,0,0,0.5);
         padding:5px;
         font-size:18px;
-        font-family:"Oswald"
+        font-family:"Oswald";
+        color: white;
       }
     }
   }
   .preview{
-    width:49.5%;
-    display:inline-block;
-    vertical-align:middle;
-    height:240px;
-  }
-  .svg{
-    position:absolute;
-    width:100%;
-    left:0;
-    top:0;
-    height:100%;
-    z-index:0;
-    .circle{
-      fill: $color-below-image;
-      transform-origin:50% 50%;
-      @include transforming(scale(0.8));
-      @include transition-transform(300ms);
-    }
-    .image{
-      transform-origin:50% 50%;
-      @include transforming(rotate(0));
-      @include transition-transform(300ms);
-    }
+    margin: auto;
+    padding-top: 20px;
+    height:100px;
+    width:80px;
+    margin-left: 38%;
   }
   &:hover{
     .preview{

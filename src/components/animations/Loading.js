@@ -1,6 +1,6 @@
 import React from 'react'
-import '../../assets/css/loading.scss'
+import '../../assets/scss/loading.scss'
 
-const Loading = () => <div class="loader"></div>
+const Loading = () => <div className="loader"></div>
 
 export default Loading

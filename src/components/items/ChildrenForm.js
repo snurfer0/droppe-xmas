@@ -1,53 +1,57 @@
 import React from 'react';
-import '../../assets/css/childrenForm.scss';
-import ChildNameInput from './ChildNameInput';
-import { Link } from 'react-router-dom';
+import '../../assets/scss/childrenForm.scss';
+import { CHILDREN_INPUT_LABELS } from '../../utils/Constants';
+import { DUMMY_NAMES } from '../../utils/Constants';
+import { connect } from 'react-redux';
+import { fetchCarts, storeChildrenInState } from '../../store/actions';
 
-class ChildrenForm extends React.Component {
+const ChildNameInput = ({ placeholder,  onChange, value }) => <input type="text" name="childName" onChange={onChange} placeholder={placeholder} value={value} required />
+const ChildNameButton = ({ childName, onClick }) => <input className='grow_on_hover' type="submit" onClick={onClick} value={childName} />
 
-    constructor(props) {
-        super(props);
-        this.state = { childrenNames: ['', '', '', '', ''] };
-        this.onNameChange = this.onNameChange.bind(this);
-    }
+const ChildrenForm = ({ setCartVisibleId, formSubmitted, setFormSubmitted, fetchCarts, storeChildrenInState }) => {
 
-    onNameChange(e, index) {
-        let names = this.state.childrenNames
+    const [childrenNames, setChildrenNames] = React.useState(DUMMY_NAMES)
+
+    const onNameChange = (e, index) => {
+        let names = childrenNames
         names[index] = e.target.value
-        this.setState({ childrenNames: names })
+        setChildrenNames(names)
     }
 
-    render() {
+    const onFormSubmit = e => {
+        e.preventDefault()
+        setFormSubmitted(true)
+        storeChildrenInState(childrenNames)
+        fetchCarts()
+    }
 
-        const labels = ['First Child', 'Second Child', 'Third Child', 'Fourth Child', 'Fifth Child']
+    const viewChildProductWishes = e => {
+        e.preventDefault()
+        let index = childrenNames.indexOf(e.target.value)
+        console.log(index);
+        setCartVisibleId(index + 1)
+    }
 
-        const link = {
-            pathname: "/carts",
-            state: {
-                childrenNames: this.state.childrenNames
+    return (
+        <form className="form-inline" onSubmit={onFormSubmit} >
+            {!formSubmitted ?
+                CHILDREN_INPUT_LABELS.map((label, index) =>
+                    <ChildNameInput key={index} placeholder={label} value={childrenNames[index]} onChange={e => onNameChange(e, index)} />)
+                : childrenNames.map((childName, index) => <ChildNameButton childName={childName} key={index} onClick={viewChildProductWishes} />)
             }
-        }
+            {!formSubmitted && <button type="submit">Get Carts</button>}
+        </form>
+    );
 
-        return (
-            <div>
-                <div id='form'>
-                    {labels.map((label, index) => {
-                        return <ChildNameInput
-                            key={label}
-                            label={label}
-                            index={index}
-                            onChange={this.onNameChange}
-                        />
-                    })}
-                    <div className="form-item">
-                        <Link to={link} className="get-carts-button">Get Carts</Link>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-   
 };
 
 
-export default ChildrenForm
+
+const mapStateToProps = state => {
+    return {  };
+};
+
+export default connect(
+    mapStateToProps,
+    { fetchCarts, storeChildrenInState }
+)(ChildrenForm);

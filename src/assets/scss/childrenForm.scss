@@ -1,0 +1,31 @@
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline input[type=submit] {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  width: 185px;
+  height: 40px;
+  background-color: #262626;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}

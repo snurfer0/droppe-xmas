@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    return <>
+    return (
         <section className="navigation">
             <div className="nav-container">
                 <div className="brand">
@@ -14,11 +14,17 @@ const Navbar = () => {
                         <li>
                             <Link to="/"> Home </Link>
                         </li>
+                        <li>
+                            <Link to="/purchased-items"> Orders </Link>
+                        </li>
+                        <li>
+                            <Link to="/checkout"> Checkout </Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
         </section>
-    </>
+    )
 }
 
 export default Navbar

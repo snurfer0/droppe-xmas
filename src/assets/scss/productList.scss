@@ -22,9 +22,10 @@ $color-below-image: #ccc;
   margin-top: 15px;
 }
 .product{
+  position: relative;
   width:300px;
   > div{
-    position:relative;
+    // position:relative;
     z-index:10;
   }
   .title-wrapper {
@@ -80,7 +81,7 @@ $color-below-image: #ccc;
   }
   .preview{
     margin: auto;
-    padding-top: 20px;
+    padding-top: 40px;
     height:100px;
     width:80px;
     margin-left: 38%;
@@ -95,4 +96,46 @@ $color-below-image: #ccc;
       }
     }
   }
+}
+
+
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 305px!important;
+}
+
+.box {
+  position: relative;
+  width: 500px;
+  height: 180px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.ribbon {
+  position: absolute;
+  display: inline-block;
+  top: 0.5em;
+  right: 0.5em;
+  max-width: 5em;
+  color: #fff;
+  z-index: 1;
+}
+
+.ribbon::after {
+  position: absolute;
+  top: 0.3em;
+  right: -6em;
+  content: "";
+  
+  height: 5em;
+  width: 15em;
+  
+  transform: rotate(45deg);
+
+  background-color: red;
+  z-index:-1;
 }

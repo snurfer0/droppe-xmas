@@ -6,8 +6,9 @@
     display: block !important;
 }
 
-.receipt .price,
-.receipt .total { 
+.receipt .price, 
+.receipt .total,
+.discount { 
     text-align: right; 
 }
 
@@ -32,3 +33,10 @@
   text-align: right;
 }
 
+.table-footer {
+  height: 100px;
+}
+
+.mt-2 {
+  margin-top: 300px !important;
+}

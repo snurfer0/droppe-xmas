@@ -1,28 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/scss/receipt.scss';
+import _ from 'lodash'
 
-const checkTotalDiscount = (products, cartProducts) => {
-    console.log(cartProducts);
+
+
+const isEmptyCart = cart => {
+    let totalQuantity = _.sumBy(cart.products, p => p.quantity)
+    return totalQuantity === 0 ? true : false
 }
 
-const FinalReceipt = ({ products, carts }) => {
+const FinalReceipt = ({ products, carts, children }) => {
 
     const [totalDiscount, setTotalDiscount] = React.useState(0)
 
-
-
     return (
         <>
-            <div className="receipt">
-                <table className="receipt-table">
+            <div className="receipt container">
                     {
-                        carts.map(cart => {
+                    carts.map((cart, index) => {
+                        if (!isEmptyCart(cart)) {
                             return (
-                                <>
-                                    <thead>
+                                    <table className="receipt-table" key={cart.id}>
+                                    <thead >
                                         <tr>
-                                            <th>Item Details</th>
+                                            <th>Item Details for {children[index]}</th>
                                             <th>Quantity</th>
                                             <th className="price">Price</th>
                                             <th className="total">Total</th>
@@ -33,7 +35,8 @@ const FinalReceipt = ({ products, carts }) => {
                                             cart.products.map(product => {
                                                 let { id, price, title } = products.find(p => p.id === product.productId)
                                                 let { quantity } = product
-                                                if (id) {
+                                                // let discountedPrice = discountForProduct(carts, cart.id, id)
+                                                if (id && quantity !== 0) {
                                                     return (
                                                         <tr key={id}>
                                                             <td>{title}</td>
@@ -46,23 +49,25 @@ const FinalReceipt = ({ products, carts }) => {
                                             })
                                         }
                                     </tbody>
-                                </>
+                                    
+                                </table>
                             )
-
+                        }
                         })
-                    }
-                    <tfoot>
-                        <tr>
-                            <td colSpan="3">Total:</td>
-                            <td className="total">$ </td>
-                        </tr>
-                        <tr>
-                            <td className="total">
-                                <button id="modal-button-open">Pay</button>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                    
+                }
+                <tfoot>
+                    <tr>
+                        <td colSpan="3">Total:</td>
+                        <td className="total">$ </td>
+                    </tr>
+                    <tr>
+                        <td className="total">
+                            <button type="">Pay</button>
+                        </td>
+                    </tr>
+                </tfoot>
+                    
             </div>
         </>
     );
@@ -73,7 +78,7 @@ const mapStateToProps = state => {
     return {
         carts: state.carts,
         children: state.children,
-        products: state.products.products,
+        products: state.products,
     };
 };
 

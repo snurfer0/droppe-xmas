@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as constants from '../../utils/Constants.js';
-import _ from 'lodash'
 import { productIdsFromCarts } from '../../utils/index.js';
 
 const api = axios.create({ baseURL: "https://fakestoreapi.com" });
@@ -15,17 +14,14 @@ export const fetchCarts = () => async dispatch => {
 }
 
 export const fetchProducts = ids => async dispatch => {
-    let products = []
-    let promises = []
+    let products, promises = []
     ids.forEach(id => promises.push(api.get(`/products/${id}/`).catch(err => console.error(err))));
     products = await Promise.all(promises)
     products = products.map(r => r.data)
-    console.log(products);
     dispatch({ type: constants.FETCH_PRODUCTS, payload: products })
 }
 
 export const substractQuantity = (cartId, productId) => async dispatch => {
-    console.log("sub");
     dispatch({ type: constants.SUBSTRACT_QUANTITY, payload: { cartId, productId } })
 }
 

@@ -1,54 +1,72 @@
 import _ from 'lodash'
 
-export const productIdsFromCarts = carts => {
-    let ids = carts.map(cart => cart.products.map(p => p.productId));
-    ids = ids.reduce((previousValue, currentValue) => previousValue.concat(currentValue), [])
-    return _.uniq(ids)
-}
-
-export const userIdsFromCarts = carts => {
-    let ids = carts.map(cart => cart.userId);
-    ids = ids.reduce((previousValue, currentValue) => previousValue.concat(currentValue), [])
-    return _.uniq(ids)
-}
-
-
-export const checkPriceForDiscount = (carts, products, productId) => {
+export const checkItemForDiscount = (carts, product) => {
     let matches = 0
-    let product = products.find(p => p.id === productId)
     let cartProducts = carts.map(c => c.products)
     cartProducts.forEach(pl => {
         pl.forEach(p => {
-            if(p.productId === productId && p.quantity > 0) matches += 1
+            if(p.productId === product.id && p.quantity > 0) matches += 1
         })
     });
-    if (matches > 1) {
-        let discountedPriceSum = matches / 10 * product.price * matches
-        return {
-            productID: productId,
-            discounted: true,
-            discountInPercentage: matches * 10,
-            finalPrice: discountedPriceSum / matches,
-            matches: matches,
-            rawPrice: product.price
+    if (matches > 1) return { discounted: true, matches: matches }
+    return { discounted: false, rawPrice: product.price }
+
+}
+
+// export const calculateTotalFinalPrice = (carts, products) => {
+
+//     let total = 0
+
+//     let products_list = carts.map(c => c.products)
+
+//     let idsChecked = []
+
+//     let res = products.map(p => {
+//         if (!idsChecked.includes(p.id)) {
+//             let match = 0
+//             idsChecked.push(p.id)
+//             products_list.forEach(pl => {
+//                 let filter = pl.filter(_p => _p.id === p.id)
+//                 if (filter.length > 0) {
+//                     match++
+//                 }
+//             })
+//             return { p, match }
+//         }
+//     })
+
+//     console.log(res);
+    
+// }
+
+export const calculateCartFinalPrice = (carts, products) => {
+
+    let total = 0
+
+    let products_list = carts.map(c => c.products)
+
+    let idsChecked = []
+
+    let res = products.map(p => {
+        if (!idsChecked.includes(p.id)) {
+            let match = 0
+            idsChecked.push(p.id)
+            products_list.forEach(pl => {
+                let arr = pl.filter(_p => {
+                    console.log(_p.productId, p.id);
+                    return _p.id === p.id
+                })
+                console.log(arr);
+                if (arr.length > 0) {
+                    console.log("inc");
+                    match += 1
+                }
+            })
+            return { p, match }
         }
-    }
-    return { discounted: false }
+    })
+
+    // console.log(res);
+    console.log(idsChecked);
 
 }
-
-export const totalDiscount = (carts, products) => {
-
-}
-
-
-let products = [
-    {
-        "id": 1,
-        "price": 109.95,
-    },
-    {
-        "id": 2,
-        "price": 22.3,
-    }
-]

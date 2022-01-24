@@ -1,0 +1,63 @@
+
+// Grow on hover
+
+.grow_on_hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+// Button
+
+.black-btn {
+  cursor: pointer;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  width: 185px;
+  height: 40px;
+  background-color: #262626;
+  border: 1px solid #ddd;
+  color: white;
+  border-radius: 5px;
+  width: 150px;
+  text-decoration: none;
+  margin-right: 15%;
+}
+
+
+// Icon Styles
+#addQuantityIcon {
+    margin-left: 10px;
+}
+
+#substractQuantityIcon {
+    margin-right: 10px;
+}
+
+
+
+// Loading
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid black; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  margin-left: 20%;
+  margin-top: 10%;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+// Other
+
+.pointer {
+  cursor: pointer;
+}

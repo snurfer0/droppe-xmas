@@ -1,66 +1,71 @@
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import '../../assets/scss/icons.scss';
-import { addQuantity, deleteProductFromCart, substractQuantity } from '../../store/actions';
-import { checkPriceForDiscount } from '../../utils';
-import Loading from '../animations/Loading';
+import { addQuantity, deleteProductFromCart, fetchProduct, substractQuantity } from '../../store/actions';
 
-const Product = ({ id, cartId, title, category, description, image, carts, products, addQuantity, substractQuantity, deleteProductFromCart }) => {
+import Loading from './Loading';
 
-    const [price, setPrice] = React.useState(null)
+const ProductPreview = ({ product }) => {
+    // if (discount.discounted) {
+    //     return (
+    //         <div className="wrapper">
+    //             <div className="box">
+    //                 <div className="ribbon text-center">
+    //                     -{discount.matches * 10}% for <br />{discount.matches} item Discount
+    //                 </div>
+    //                 <img className="preview" src={product.image} />
+    //             </div>
+    //         </div>
+    //     )
+    // }
+
+    return (
+        <div className="wrapper">
+            <div className="box">
+                <img className="preview" src={product.image} />
+            </div>
+        </div>
+    )
+}
+
+const Product = ({ productId, cart, carts, products, fetchProduct, addQuantity, substractQuantity, deleteProductFromCart }) => {
+
+    const [product, setProduct] = useState(null)
+
+    useEffect(() => {
+        let _product = products.find(p => p.id === productId)
+        if (!_product) fetchProduct(productId)
+    }, [])
+
+    useEffect(() => {
+        let _product = products.find(p => p.id === productId)
+        if (_product) setProduct(_product)
+    }, [products])
+
+    if (!product) return <Loading />
     
-    React.useEffect(() => {
-        let _price = checkPriceForDiscount(carts, products, id)
-        console.log("Cart changed", price);
-        setPrice(_price)
-    }, [carts])
-
-    if(!price) return <Loading />
 
     return (
         <div className="product">
             <div className="title-wrapper">
                 <div className="title">
-                    <div>
-                        {title}  ({category})
-                    </div>
+                    {product.title}  ({product.category})
                 </div>
             </div>
-            {price.discounted === true 
-                ? <>
-                    <div className="wrapper">
-                        <div className="box">
-                            <div className="ribbon text-center">
-                                -{price.discountInPercentage}% for <br />{ price.matches } item Discount
-                            </div>
-                            <img className="preview" src={image} />
-                        </div>
-                    </div>
-                </>
-                : <>
-                    <div className="wrapper">
-                        <div className="box">
-                            <img className="preview" src={image} />
-                        </div>
-                    </div>
-                </>
-            }
-            
-            
+            <ProductPreview {...{ product }} />
             <div className="text">
                 <div className="description">
-                    {description}
+                    {product.description}
                 </div>
                 <div className="price">
-                    $ {price.rawPrice}
+                    $ {product.price}
                 </div>
                 <div className="shop-actions">
-                    <FontAwesomeIcon id='substractQuantityIcon' className='pointer' icon={faMinus} onClick={() => substractQuantity(cartId, id)} />
-                    {carts.find(c => c.id === cartId).products.find(p => p.productId === id).quantity}
-                    <FontAwesomeIcon id='addQuantityIcon' className='pointer' icon={faPlus} onClick={() => addQuantity(cartId, id)} />
-                    <button className='pointer grow_on_hover' onClick={() => deleteProductFromCart(cartId, id)}>
+                    <FontAwesomeIcon id='substractQuantityIcon' className='pointer' icon={faMinus} onClick={() => substractQuantity(cart.id, productId)} />
+                    {cart.products.find(p => p.productId === productId).quantity}
+                    <FontAwesomeIcon id='addQuantityIcon' className='pointer' icon={faPlus} onClick={() => addQuantity(cart.id, productId)} />
+                    <button className='pointer grow_on_hover' onClick={() => deleteProductFromCart(cart.id, productId)}>
                         <FontAwesomeIcon icon={faTrash} style={{ cursor: "pointer" }} /> Delete
                     </button>
                 </div>
@@ -70,10 +75,13 @@ const Product = ({ id, cartId, title, category, description, image, carts, produ
 };
 
 const mapStateToProps = state => {
-    return {};
+    return {
+        carts: state.carts,
+        products: state.products,
+    };
 };
 
 export default connect(
     mapStateToProps,
-    { addQuantity, substractQuantity, deleteProductFromCart }
+    { addQuantity, substractQuantity, deleteProductFromCart, fetchProduct }
 )(Product);

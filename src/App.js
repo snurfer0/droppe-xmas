@@ -1,16 +1,13 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import './assets/scss/navbar.scss';
-import './assets/scss/styles.scss';
+import { _routes } from './_routes';
+import './assets/scss/_index.scss'
 import Navbar from './components/items/Navbar';
-import Home from './components/pages/Home';
-import Checkout from './components/pages/Checkout';
+import { Route, Switch } from 'react-router-dom';
 
 const App = () => <>
     <Navbar />
     <Switch>
-        <Route path="/" component={Home} exact />
-        <Route path="/checkout" component={Checkout}  />
+        {_routes.map(route => <Route key={route.path} path={route.path} component={route.component} exact={route.exact} />)}
     </Switch>
 </>
 

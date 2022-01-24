@@ -1,37 +1,26 @@
 import React from 'react';
-import Loading from '../animations/Loading';
-import Product from './Product';
+import { connect } from 'react-redux';
+import Loading from './Loading';
 import CartReceipt from './CartReceipt';
-import '../../assets/scss/productList.scss'
+import Product from './Product';
 
-const ProductList = ({ productList, cart, carts }) => {
+const ProductList = ({ cart }) => {
 
-  const [products, setProducts] = React.useState(null)
-  const productsToRender = cart.products
-  const ids = productsToRender.map(p => p.productId)
-
-  React.useEffect(() => {
-    if (!productList || productList.length !== 0) {
-      let ps = ids.map(id => {
-        let product = productList.find(p => p.id === id)
-        if (product) return product
-      })
-      setProducts(ps)
-    }
-  }, [productList])
-
-  if (!products || products.length === 0) return <Loading />
-  
+  if (!cart) return <Loading />
 
   return (
     <>
       <div className='products-grid'>
-        {products && products.map(p => <Product key={p.id} {...p} cartId={cart.id} carts={carts} products={productList} />)}
+        {cart && cart.products.map(p => <Product key={p.productId} cart={cart} {...p} />)}
       </div>
-      <CartReceipt products={products} cart={cart} productList={productList} carts={carts} />
+      <CartReceipt cart={cart} />
     </>
   )
 }
 
 
-export default ProductList
+const mapStateToProps = state => {
+  return { carts: state.carts };
+};
+
+export default connect(mapStateToProps, null)(ProductList);

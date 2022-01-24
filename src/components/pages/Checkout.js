@@ -1,14 +1,8 @@
+import _ from 'lodash'
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../assets/scss/receipt.scss';
-import _ from 'lodash'
 
-
-
-const isEmptyCart = cart => {
-    let totalQuantity = _.sumBy(cart.products, p => p.quantity)
-    return totalQuantity === 0 ? true : false
-}
+const isEmptyCart = cart => _.sumBy(cart.products, p => p.quantity) === 0 ? true : false
 
 const FinalReceipt = ({ products, carts, children }) => {
 
@@ -78,11 +72,8 @@ const mapStateToProps = state => {
     return {
         carts: state.carts,
         children: state.children,
-        products: state.products,
-    };
+        products: state.products
+    }
 };
 
-export default connect(
-    mapStateToProps,
-    {}
-)(FinalReceipt);
+export default connect(mapStateToProps, null)(FinalReceipt);

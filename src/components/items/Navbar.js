@@ -1,4 +1,5 @@
 import React from 'react';
+import { _navs } from './_navs';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -9,17 +10,8 @@ const Navbar = () => {
                     <Link to="/"> Droppe Xmas </Link>
                 </div>
                 <nav>
-                    <div className="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
                     <ul className="nav-list">
-                        <li>
-                            <Link to="/"> Home </Link>
-                        </li>
-                        <li>
-                            <Link to="/purchased-items"> Orders </Link>
-                        </li>
-                        <li>
-                            <Link to="/checkout"> Checkout </Link>
-                        </li>
+                        {_navs.map(nav => <li key={nav.path}> <Link to={nav.path}> {nav.name} </Link> </li> )}
                     </ul>
                 </nav>
             </div>

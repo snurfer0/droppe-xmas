@@ -1,69 +1,76 @@
 import { FETCH_CARTS, ADD_QUANTITY, SUBSTRACT_QUANTITY, DELETE_PRODUCT_FROM_CART } from "../../utils/Constants";
 
+const initialState = {
+    carts: [],
+    discounts: null
+}
 
-const cartsReducer = (carts = [], action) => {
+const cartsReducer = (carts = initialState.carts, action) => {
     switch (action.type) {
+
         case FETCH_CARTS:
             return action.payload;
+        
         case ADD_QUANTITY:
             var { cartId, productId } = action.payload
             return carts.map(cart => {
-                if (cart.id === cartId) {
-                    return {
-                        ...cart,
-                        products: cart.products.map(product => {
-                            if (product.productId === productId) {
-                                return {
-                                    ...product,
-                                    quantity: product.quantity + 1
+                    if (cart.id === cartId) {
+                        return {
+                            ...cart,
+                            products: cart.products.map(product => {
+                                if (product.productId === productId) {
+                                    return {
+                                        ...product,
+                                        quantity: product.quantity + 1
+                                    }
                                 }
-                            }
-                            return product
-                        })
+                                return product
+                            })
+                        }
                     }
-                }
-                return cart
-            })
+                    return cart
+                })
         
         case SUBSTRACT_QUANTITY:
             var { cartId, productId } = action.payload
             return carts.map(cart => {
-                if (cart.id === cartId) {
-                    return {
-                        ...cart,
-                        products: cart.products.map(product => {
-                            if (product.productId === productId) {
-                                return {
-                                    ...product,
-                                    quantity: (product.quantity > 0) ? product.quantity - 1 : product.quantity
+                    if (cart.id === cartId) {
+                        return {
+                            ...cart,
+                            products: cart.products.map(product => {
+                                if (product.productId === productId) {
+                                    return {
+                                        ...product,
+                                        quantity: (product.quantity > 0) ? product.quantity - 1 : product.quantity
+                                    }
                                 }
-                            }
-                            return product
-                        })
+                                return product
+                            })
+                        }
                     }
-                }
-                return cart
-            })
+                    return cart
+                })
         
         case DELETE_PRODUCT_FROM_CART:
             var { cartId, productId } = action.payload
             return carts.map(cart => {
-                if (cart.id === cartId) {
-                    return {
-                        ...cart,
-                        products: cart.products.map(product => {
-                            if (product.productId === productId) {
-                                return {
-                                    ...product,
-                                    quantity: 0
+                    if (cart.id === cartId) {
+                        return {
+                            ...cart,
+                            products: cart.products.map(product => {
+                                if (product.productId === productId) {
+                                    return {
+                                        ...product,
+                                        quantity: 0
+                                    }
                                 }
-                            }
-                            return product
-                        })
+                                return product
+                            })
+                        }
                     }
-                }
-                return cart
+                    return cart
             })
+        
         default:
             return carts
     }

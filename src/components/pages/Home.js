@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import ChildrenForm from '../items/ChildrenForm';
 import ProductList from '../items/ProductList';
 
 
-const Home = ({ carts, children, products }) => {
+const Home = ({ carts, children }) => {
 
-    const [formSubmitted, setFormSubmitted] = React.useState(false)
-    const [cartVisibleId, setCartVisibleId] = React.useState(1)
+    const [formSubmitted, setFormSubmitted] = useState(false)
+    const [cartVisibleId, setCartVisibleId] = useState(1)
 
-    React.useEffect(() => {
-        if (children.length !== 0 && carts.length !== 0 && products.length !== 0) {
-            setFormSubmitted(true)
-        }
+    useEffect(() => {
+        if (children.length !== 0 && carts.length !== 0) setFormSubmitted(true)
     }, [])
 
 
@@ -26,8 +24,9 @@ const Home = ({ carts, children, products }) => {
                 />
             </div>
             {(carts && formSubmitted) &&
-                carts.filter(c => c.id === cartVisibleId).map(cart =>
-                    <ProductList key={cart.id} productList={products} carts={carts} cart={cart} />)}
+                carts.filter(c => c.id === cartVisibleId)
+                     .map(cart =>
+                        <ProductList key={cart.id} { ...{ cart } } />)}
         </div>
     )
 };
@@ -36,11 +35,7 @@ const mapStateToProps = state => {
     return {
         carts: state.carts,
         children: state.children,
-        products: state.products
     };
 };
 
-export default connect(
-    mapStateToProps,
-    {}
-)(Home);
+export default connect(mapStateToProps, null)(Home);

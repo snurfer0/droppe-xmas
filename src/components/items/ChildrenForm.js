@@ -44,7 +44,7 @@ const ChildrenForm = ({ setCartVisibleId, formSubmitted, setFormSubmitted, fetch
     return (
         <form className="form-inline" onSubmit={onFormSubmit}>
             {!formSubmitted ? <ChildNameInputs {...{ childrenNames, onNameChange } } /> : <ChildNameButtons {...{ childrenNames, viewChildProducts } } /> }
-            {!formSubmitted && <button type="submit">Get Carts</button>}
+            {!formSubmitted && <button className='mt-1' type="submit">Get Carts</button>}
         </form>
     );
 

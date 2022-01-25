@@ -26,7 +26,7 @@ const ProductList = ({ cart, carts, stateProducts }) => {
 
   return (
     <>
-      <div className='products-grid'>
+      <div className='products-inline'>
         {cart && cart.products.map(p => {
           let product = stateProducts.find(_p => _p.id === p.productId)
           if (product) {

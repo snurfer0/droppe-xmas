@@ -2,11 +2,13 @@
 
 $color-below-image: #ccc;
 
-.products-grid {
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
+.products-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
   margin-top: 15px;
 }
+
 .product{
   position: relative;
   width:300px;

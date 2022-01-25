@@ -1,3 +1,5 @@
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -6,10 +8,10 @@ import { calculateCartFinalPrice } from '../../utils/calculators.js';
 const CartReceiptTableRow = ({ cartProduct, quantity }) => {
     return (
         <tr key={cartProduct.id}>
-            <td className="text-left">{cartProduct.title}</td>
-            <td className="text-left">{quantity}</td>
-            <td className="text-left">$ {cartProduct.price}</td>
-            <td className="text-left">$ {(quantity * cartProduct.price).toFixed(2)}</td>
+            <td>{cartProduct.title}</td>
+            <td>{quantity}</td>
+            <td>$ {cartProduct.price}</td>
+            <td>$ {(quantity * cartProduct.price).toFixed(2)}</td>
         </tr>
     )
 }
@@ -18,10 +20,10 @@ const CartReceiptTableHeader = () => {
     return (
         <thead>
             <tr>
-                <th className="text-left">Item Details</th>
-                <th className="text-left">Quantity</th>
-                <th className="text-left">Price</th>
-                <th className="text-left">Total</th>
+                <th>Item Details</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
             </tr>
         </thead>
     )
@@ -43,12 +45,12 @@ const CartReceiptTableFooter = ({ finalPrice }) => {
     return (
         <tfoot className='table-footer'>
             <tr>
-                <td colSpan="2">Cart Total:</td>
-                <td>$ {finalPrice}</td>
+                <td colSpan="3">Cart Total:</td>
                 <td>
-                    <Link to='/checkout' className='grow_on_hover black-btn'>Full Order</Link>
+                    $ {finalPrice}
                 </td>
             </tr>
+
         </tfoot>
     )
 }
@@ -79,11 +81,16 @@ const CartReceipt = props => {
     if (!cartProducts) return <></>
 
     return (
-        <table className="table">
-            <CartReceiptTableHeader />
-            <CartReceiptTableBody {...{ stateProducts, cart, cartProducts }} />
-            <CartReceiptTableFooter {...{ finalPrice }} />
-        </table>
+        <>
+            <table className="table">
+                <CartReceiptTableHeader />
+                <CartReceiptTableBody {...{ stateProducts, cart, cartProducts }} />
+                <CartReceiptTableFooter {...{ finalPrice }} />
+            </table>
+            <Link to='/checkout' className='black-btn cart-confirm-btn'>
+                Confirm<FontAwesomeIcon className='ml-1 pointer' icon={faArrowAltCircleRight} />
+            </Link>
+        </>
     );
 };
 

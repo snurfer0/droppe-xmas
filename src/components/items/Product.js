@@ -5,18 +5,16 @@ import { connect } from 'react-redux';
 import { addQuantity, deleteProductFromCart, substractQuantity } from '../../store/actions';
 
 const ProductPreview = ({ image }) => {
-    // if (discount.discounted) {
-    //     return (
-    //         <div className="wrapper">
-    //             <div className="box">
-    //                 <div className="ribbon text-center">
-    //                     -{discount.matches * 10}% for <br />{discount.matches} item Discount
-    //                 </div>
-    //                 <img className="preview" src={product.image} />
-    //             </div>
-    //         </div>
-    //     )
-    // }
+        // return (
+        //     <div className="wrapper">
+        //         <div className="box">
+        //             <div className="ribbon text-center">
+        //                 -{discount.matches * 10}% for <br />{discount.matches} item Discount
+        //             </div>
+        //             <img className="preview" src={product.image} />
+        //         </div>
+        //     </div>
+        // )
 
     return (
         <div className="wrapper">
@@ -37,25 +35,23 @@ const Product = props =>  (
             <div className="description"> {props.description} </div>
             <div className="price"> $ {props.price} </div>
             <div className="shop-actions">
-                <FontAwesomeIcon
-                    id='substractQuantityIcon'
-                    className='pointer'
-                    icon={faMinus}
-                    onClick={() => props.substractQuantity(props.cart.id, props.id)}
-                />
-                {props.cart.products.find(p => p.productId === props.id).quantity}
-                <FontAwesomeIcon
-                    id='addQuantityIcon'
-                    className='pointer'
-                    icon={faPlus}
-                    onClick={() => props.addQuantity(props.cart.id, props.id)}
-                />
-                <FontAwesomeIcon
-                    id='addQuantityIcon'
-                    className='pointer'
-                    icon={faTrash}
-                    onClick={() => props.deleteProductFromCart(props.cart.id, props.id)}
-                />
+              <FontAwesomeIcon
+                  className='mr-1 pointer'
+                  icon={faMinus}
+                  onClick={() => props.substractQuantity(props.cart.id, props.id)}
+              />
+              {props.cart.products.find(p => p.productId === props.id).quantity}
+              <FontAwesomeIcon
+                  className='ml-1 pointer'
+                  icon={faPlus}
+                  onClick={() => props.addQuantity(props.cart.id, props.id)}
+              />
+              {props.carts.find(c => c.id === props.cart.id).products.find(p => p.productId === props.id).quantity > 0
+                && <FontAwesomeIcon
+                  className='pointer ml-1'
+                  icon={faTrash}
+                  onClick={() => props.deleteProductFromCart(props.cart.id, props.id)}
+                /> }
             </div>
         </div>
     </div>

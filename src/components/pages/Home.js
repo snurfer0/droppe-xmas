@@ -25,8 +25,7 @@ const Home = ({ carts, children }) => {
             </div>
             {(carts && formSubmitted) &&
                 carts.filter(c => c.id === cartVisibleId)
-                     .map(cart =>
-                        <ProductList key={cart.id} { ...{ cart } } />)}
+                     .map(cart => <ProductList key={cart.id} { ...{ cart } } />)}
         </div>
     )
 };

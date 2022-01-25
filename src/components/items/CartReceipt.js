@@ -46,7 +46,7 @@ const CartReceiptTableFooter = ({ finalPrice }) => {
                 <td colSpan="2">Cart Total:</td>
                 <td>$ {finalPrice}</td>
                 <td>
-                    <Link to='/checkout' className='grow_on_hover black-btn'>Checkout</Link>
+                    <Link to='/checkout' className='grow_on_hover black-btn'>Full Order</Link>
                 </td>
             </tr>
         </tfoot>

@@ -5,6 +5,50 @@ import { calculateFinalPrice } from '../../utils/calculators';
 
 const isEmptyCart = cart => _.sumBy(cart.products, p => p.quantity) === 0 ? true : false
 
+const OrderConfirmTableHead = ({ children, index }) => (
+    <thead >
+        <tr>
+            <th className="text-left">{children[index]}'s Items</th>
+            <th className="text-left">Quantity</th>
+            <th className="text-left">Price</th>
+            <th className="text-left">Total</th>
+        </tr>
+    </thead>
+)
+
+const OrderConfirmTableBody = ({ cart, stateProducts }) => (
+    <tbody>
+        {cart.products.map(product => {
+            let { id, price, title } = stateProducts.find(p => p.id === product.productId)
+            let { quantity } = product
+            if (id && quantity !== 0) {
+                return (
+                    <tr key={id}>
+                        <td className="text-left">{title}</td>
+                        <td className="text-left">{quantity}</td>
+                        <td className="text-left">$ {price.toFixed(2)}</td>
+                        <td className="text-left">$ {(quantity * price).toFixed(2)}</td>
+                    </tr>
+                )
+            }
+        })}
+    </tbody>
+)
+
+const OrderConfirmTableFooter = ({ finalPrice }) => (
+    <tfoot>
+        <tr>
+            <td colSpan="3">Total:</td>
+            <td className="total">$ {finalPrice}</td>
+        </tr>
+        <tr>
+            <td className="total">
+                <button className='black-btn'>Confirm Order</button>
+            </td>
+        </tr>
+    </tfoot>
+)
+
 
 const OrderConfirm = ({ stateProducts, carts, children }) => {
 
@@ -18,56 +62,20 @@ const OrderConfirm = ({ stateProducts, carts, children }) => {
     }, [])
 
     return (
-        <>
-            <div className="receipt container">
-                    {carts.map((cart, index) => {
-                        if (!isEmptyCart(cart)) {
-                            return (
-                                    <table className="receipt-table" key={cart.id}>
-                                    <thead >
-                                        <tr>
-                                            <th>{children[index]}'s Items</th>
-                                            <th>Quantity</th>
-                                            <th className="price">Price</th>
-                                            <th className="total">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {cart.products.map(product => {
-                                                let { id, price, title } = stateProducts.find(p => p.id === product.productId)
-                                                let { quantity } = product
-                                                // let discountedPrice = discountForProduct(carts, cart.id, id)
-                                                if (id && quantity !== 0) {
-                                                    return (
-                                                        <tr key={id}>
-                                                            <td>{title}</td>
-                                                            <td className="text-center">{quantity}</td>
-                                                            <td className="price">$ {price.toFixed(2)}</td>
-                                                            <td className="total">$ {(quantity * price).toFixed(2)}</td>
-                                                        </tr>
-                                                    )
-                                                }
-                                            })}
-                                    </tbody>
-                                </table>
-                            )
-                        }
-                    })
-                }
-                <tfoot>
-                    <tr>
-                        <td colSpan="3">Total:</td>
-                        <td className="total">$ {finalPrice}</td>
-                    </tr>
-                    <tr>
-                        <td className="total">
-                            <button className='black-btn'>Confirm Order</button>
-                        </td>
-                    </tr>
-                </tfoot>
-                    
-            </div>
-        </>
+        <div className="container">
+                {carts.map((cart, index) => {
+                    if (!isEmptyCart(cart)) {
+                        return (
+                            <table className="table mb-3" key={cart.id}>
+                                <OrderConfirmTableHead {...{children, index}} />
+                                <OrderConfirmTableBody {...{cart, stateProducts}} />
+                            </table>
+                        )
+                    }
+                })
+            }
+            <OrderConfirmTableFooter {...{finalPrice}} />
+        </div>
     );
 };
 

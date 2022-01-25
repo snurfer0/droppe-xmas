@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { DUMMY_NAMES } from '../../utils/Constants';
-import { CHILDREN_INPUT_LABELS } from '../../utils/Constants';
+import { DUMMY_NAMES } from '../../utils/constants';
+import { CHILDREN_INPUT_LABELS } from '../../utils/constants';
 import { fetchCarts, storeChildrenInState } from '../../store/actions';
 
 const NameInput = ({ placeholder,  onChange, value }) => <input type="text" name="childName" onChange={onChange} placeholder={placeholder} value={value} required />
-const NameButton = ({ childName, onClick }) => <input className='grow_on_hover' type="submit" onClick={onClick} value={childName} />
+const NameButton = ({ childName, onClick }) => <button className='grow_on_hover' type='submit' onClick={onClick}>{childName}</button>
 
 const ChildNameInputs = ({ childrenNames, onNameChange }) => {
     return CHILDREN_INPUT_LABELS.map((label, index) =>
@@ -39,7 +39,6 @@ const ChildrenForm = ({ setCartVisibleId, formSubmitted, setFormSubmitted, fetch
         let index = childrenNames.indexOf(e.target.value)
         setCartVisibleId(index + 1)
     }
-
 
     return (
         <form className="form-inline" onSubmit={onFormSubmit}>

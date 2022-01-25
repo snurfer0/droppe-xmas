@@ -1,4 +1,4 @@
-export const _navs = [
+export default [
     {
         name: "Home",
         path: "/"

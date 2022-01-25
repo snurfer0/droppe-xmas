@@ -1,4 +1,4 @@
-import { FETCH_PRODUCT } from "../../utils/Constants";
+import { FETCH_PRODUCTS } from "../../utils/constants";
 
 const initialState = {
     products: []
@@ -6,10 +6,8 @@ const initialState = {
 
 const productsReducer = (products = initialState.products, action) => {
     switch (action.type) {
-        case FETCH_PRODUCT:
-            if (!products.filter(p => p.id === action.payload.id).length) {
-                return [...products, action.payload]
-            } 
+        case FETCH_PRODUCTS:
+            return [...products, ...action.payload]
         default:
             return products
     }

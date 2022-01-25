@@ -1,6 +1,6 @@
-import Home from "./components/pages/Home"
-import Checkout from "./components/pages/Checkout"
-import Orders from "./components/pages/Orders"
+import Home from "../components/pages/Home"
+import Checkout from "../components/pages/OrderConfirm"
+import Orders from "../components/pages/Orders"
 
 export const _routes = [
     {

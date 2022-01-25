@@ -1,23 +1,7 @@
 // Product styles
 
 $color-below-image: #ccc;
-@mixin star-icon(){
-  background-image:url(https://cdn4.iconfinder.com/data/icons/small-n-flat/24/star-20.png);
-}
-@mixin transforming($value){
-	-webkit-transform: $value;
-	-moz-transform: $value;
-	-ms-transform: $value;
-	-o-transform: $value;
-	transform: $value;
-}
-@mixin transition-transform($delay){
-  -webkit-transition: transform $delay;
-	-moz-transition: transform $delay;
-	-ms-transition: transform $delay;
-	-o-transition: transform $delay;
-	transition: transform $delay;
-}
+
 .products-grid {
   display: grid;
   grid-template-columns: 33% 33% 33%;
@@ -88,19 +72,7 @@ $color-below-image: #ccc;
     width:80px;
     margin-left: 38%;
   }
-  &:hover{
-    .preview{
-      .image{
-        @include transforming(rotate(20deg));
-      }
-      .circle{
-        @include transforming(scale(1));
-      }
-    }
-  }
 }
-
-
 
 .wrapper {
   display: flex;
@@ -140,8 +112,4 @@ $color-below-image: #ccc;
 
   background-color: red;
   z-index:-1;
-}
-
-.display-none {
-  display: none;
 }

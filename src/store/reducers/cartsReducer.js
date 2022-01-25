@@ -1,4 +1,4 @@
-import { FETCH_CARTS, ADD_QUANTITY, SUBSTRACT_QUANTITY, DELETE_PRODUCT_FROM_CART } from "../../utils/Constants";
+import { FETCH_CARTS, ADD_QUANTITY, SUBSTRACT_QUANTITY, DELETE_PRODUCT_FROM_CART } from "../../utils/constants";
 
 const initialState = {
     carts: [],

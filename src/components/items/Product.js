@@ -1,12 +1,10 @@
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { addQuantity, deleteProductFromCart, fetchProduct, substractQuantity } from '../../store/actions';
+import { addQuantity, deleteProductFromCart, substractQuantity } from '../../store/actions';
 
-import Loading from './Loading';
-
-const ProductPreview = ({ product }) => {
+const ProductPreview = ({ image }) => {
     // if (discount.discounted) {
     //     return (
     //         <div className="wrapper">
@@ -23,65 +21,47 @@ const ProductPreview = ({ product }) => {
     return (
         <div className="wrapper">
             <div className="box">
-                <img className="preview" src={product.image} />
+                <img className="preview" src={image} />
             </div>
         </div>
     )
 }
 
-const Product = ({ productId, cart, carts, products, fetchProduct, addQuantity, substractQuantity, deleteProductFromCart }) => {
-
-    const [product, setProduct] = useState(null)
-
-    useEffect(() => {
-        let _product = products.find(p => p.id === productId)
-        if (!_product) fetchProduct(productId)
-    }, [])
-
-    useEffect(() => {
-        let _product = products.find(p => p.id === productId)
-        if (_product) setProduct(_product)
-    }, [products])
-
-    if (!product) return <Loading />
-    
-
-    return (
-        <div className="product">
-            <div className="title-wrapper">
-                <div className="title">
-                    {product.title}  ({product.category})
-                </div>
-            </div>
-            <ProductPreview {...{ product }} />
-            <div className="text">
-                <div className="description">
-                    {product.description}
-                </div>
-                <div className="price">
-                    $ {product.price}
-                </div>
-                <div className="shop-actions">
-                    <FontAwesomeIcon id='substractQuantityIcon' className='pointer' icon={faMinus} onClick={() => substractQuantity(cart.id, productId)} />
-                    {cart.products.find(p => p.productId === productId).quantity}
-                    <FontAwesomeIcon id='addQuantityIcon' className='pointer' icon={faPlus} onClick={() => addQuantity(cart.id, productId)} />
-                    <button className='pointer grow_on_hover' onClick={() => deleteProductFromCart(cart.id, productId)}>
-                        <FontAwesomeIcon icon={faTrash} style={{ cursor: "pointer" }} /> Delete
-                    </button>
-                </div>
+const Product = props =>  (
+    <div className="product">
+        <div className="title-wrapper">
+            <div className="title"> {props.title}  ({props.category}) </div>
+        </div>
+        <ProductPreview image={props.image} />
+        <div className="text">
+            <div className="description"> {props.description} </div>
+            <div className="price"> $ {props.price} </div>
+            <div className="shop-actions">
+                <FontAwesomeIcon
+                    id='substractQuantityIcon'
+                    className='pointer'
+                    icon={faMinus}
+                    onClick={() => props.substractQuantity(props.cart.id, props.id)}
+                />
+                {props.cart.products.find(p => p.productId === props.id).quantity}
+                <FontAwesomeIcon
+                    id='addQuantityIcon'
+                    className='pointer'
+                    icon={faPlus}
+                    onClick={() => props.addQuantity(props.cart.id, props.id)}
+                />
+                <FontAwesomeIcon
+                    id='addQuantityIcon'
+                    className='pointer'
+                    icon={faTrash}
+                    onClick={() => props.deleteProductFromCart(props.cart.id, props.id)}
+                />
             </div>
         </div>
-    );
-};
+    </div>
+);
 
-const mapStateToProps = state => {
-    return {
-        carts: state.carts,
-        products: state.products,
-    };
-};
 
-export default connect(
-    mapStateToProps,
-    { addQuantity, substractQuantity, deleteProductFromCart, fetchProduct }
-)(Product);
+const mapStateToProps = state => { return { carts: state.carts } };
+
+export default connect(mapStateToProps, { addQuantity, substractQuantity, deleteProductFromCart })(Product);

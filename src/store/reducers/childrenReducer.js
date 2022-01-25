@@ -1,4 +1,4 @@
-import { STORE_CHILDREN_IN_STATE } from "../../utils/Constants";
+import { STORE_CHILDREN_IN_STATE } from "../../utils/constants";
 
 const initialState = {
     children: []

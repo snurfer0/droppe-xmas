@@ -10,7 +10,7 @@ const CartReceiptTableRow = ({ cartProduct, quantity }) => {
         <tr key={cartProduct.id}>
             <td>{cartProduct.title}</td>
             <td>{quantity}</td>
-            <td>$ {cartProduct.price}</td>
+            <td>$ {cartProduct.price.toFixed(2)}</td>
             <td>$ {(quantity * cartProduct.price).toFixed(2)}</td>
         </tr>
     )
@@ -31,7 +31,7 @@ const CartReceiptTableHeader = () => {
 
 const CartReceiptTableBody = ({ cart, cartProducts, stateProducts }) => {
     return (
-        <tbody class="table-hover">
+        <tbody className="table-hover">
             {cartProducts.map(cartProduct => {
                 let product = stateProducts.find(p => p.id === cartProduct.id)
                 let { quantity } = cart.products.find(p => p.productId === cartProduct.id)
@@ -87,7 +87,7 @@ const CartReceipt = props => {
                 <CartReceiptTableBody {...{ stateProducts, cart, cartProducts }} />
                 <CartReceiptTableFooter {...{ finalPrice }} />
             </table>
-            <Link to='/checkout' className='black-btn cart-confirm-btn'>
+            <Link to='/order-confirm' className='black-btn cart-confirm-btn'>
                 Confirm<FontAwesomeIcon className='ml-1 pointer' icon={faArrowAltCircleRight} />
             </Link>
         </>

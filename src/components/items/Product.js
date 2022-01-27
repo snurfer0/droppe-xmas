@@ -33,7 +33,7 @@ const Product = props =>  (
         <ProductPreview image={props.image} />
         <div className="text">
             <div className="description"> {props.description} </div>
-            <div className="price"> $ {props.price} </div>
+            <div className="price"> $ {props.price.toFixed(2)} </div>
             <div className="shop-actions">
               <FontAwesomeIcon
                   className='mr-1 pointer'

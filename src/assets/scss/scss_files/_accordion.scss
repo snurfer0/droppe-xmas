@@ -1,0 +1,106 @@
+$mainColor: #262626;
+$clouds: #ecf0f1;
+// General
+
+.accordions {
+
+    h2 {
+        margin: 20 0 .5em;
+        font-weight: normal;
+    }
+    input {
+        position: absolute;
+        z-index: -1;
+    }
+
+   
+    /* Accordion styles */
+    .tabs {
+        overflow: hidden;
+        box-shadow: 0 4px 4px -2px #262626;
+    }
+    .tab {
+        width: 100%;
+        color: white;
+        overflow: hidden;
+        &-label {
+            display: flex;
+            justify-content: space-between;
+            padding: 1em;
+            background: $mainColor;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                background: darken($mainColor, 10%);
+            }
+            &::after {
+                content: "\276F";
+                width: 1em;
+                height: 1em;
+                text-align: center;
+                transition: all .35s;
+            }
+        }
+        &-content {
+            max-height: 0;
+            padding: 0 1em;
+            color: $mainColor;
+            background: white;
+            transition: all .35s;
+
+            ul {
+                list-style-type: none;
+            }
+
+            .price-wrapper {
+                float: right;
+            }
+        }
+        .ordered-product-container {
+            display: flex;
+            justify-content: space-between;
+            .ordered-product-info {
+                margin-top: 20px;
+                display: flex;
+                .product-image > img {
+                    height: 70px;
+                    width: 60px;
+                }
+
+                .product-data {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 20px;
+                }
+            }
+
+            .ordered-product-price {
+                margin-top: 20px;
+                font-size: 20px;
+            }
+        }
+    }
+
+    // :checked
+    input:checked {
+        + .tab-label {
+                background: darken($mainColor, 10%);
+            &::after {
+                transform: rotate(90deg);
+            }
+        }
+        ~ .tab-content {
+            display: block;
+
+            // .price-wrapper {
+            //     display: none;
+            // }
+        }
+    }
+
+    input:not(checked) {
+        ~ .tab-content {
+            display: none;
+        }
+    }
+}

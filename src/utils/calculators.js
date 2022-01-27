@@ -42,8 +42,6 @@ export const calculateFinalPrice = (carts, stateProducts) => {
     products_list.forEach(pl => {
         pl.forEach(p => {
             let sp = stateProducts.find(_sp => _sp.id === p.productId)
-            console.log(p);
-            console.log(sp.price);
             total += sp.price * p.quantity
             rawTotal += sp.price * p.quantity
         })
@@ -56,7 +54,7 @@ export const calculateFinalPrice = (carts, stateProducts) => {
             total -= productsPriceTotal * (0 + match.count / 10)
         })
     }
-    console.log(total);
+    
     return { total: total.toFixed(2), rawTotal: rawTotal.toFixed(2)}
 }
 

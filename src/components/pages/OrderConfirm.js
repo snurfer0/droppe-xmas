@@ -2,6 +2,9 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { calculateFinalPrice } from '../../utils/calculators';
+import { Link } from 'react-router-dom';
+import { confirmOrder } from '../../store/actions';
+import { useHistory } from 'react-router-dom';
 
 const isEmptyCart = cart => _.sumBy(cart.products, p => p.quantity) === 0 ? true : false
 
@@ -35,9 +38,12 @@ const OrderConfirmTableBody = ({ cart, stateProducts }) => (
     </tbody>
 )
 
-const OrderConfirm = ({ stateProducts, carts, children }) => {
+
+
+const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
 
     const [finalPrice, setFinalPrice] = useState(0)
+    const history = useHistory();
 
     useEffect(() => {
         if (stateProducts.length && carts) {
@@ -47,8 +53,24 @@ const OrderConfirm = ({ stateProducts, carts, children }) => {
         }
     }, [carts])
 
+    const onConfirmOrder = e => {
+        e.preventDefault()
+        
+        let _carts = carts.map((cart, index) => {
+            return { childName: children[index], ...cart }
+        })
+
+        let order = {
+            carts: _carts,
+            finalPrice: finalPrice
+        }
+
+        confirmOrder(order)
+        history.push('/orders')
+    }
+
     return (
-        <div className="container-lg">
+        <div className="container">
             {carts.map((cart, index) => {
                 if (!isEmptyCart(cart)) {
                     return (
@@ -60,13 +82,13 @@ const OrderConfirm = ({ stateProducts, carts, children }) => {
                 }
             })}
             <div className='order-confirm-total'>
-                <div class="price-wrapper mr-2">
+                <div className="price-wrapper mr-2">
                     {(finalPrice.rawTotal - finalPrice.total > 0) &&
-                        <div class="old-price">$ {finalPrice.rawTotal}<span class="strikethrough"></span></div>}
-                    <div class="price strikethrough">$ {finalPrice.total}</div>
+                        <div className="old-price">$ {finalPrice.rawTotal}<span className ="strikethrough"></span></div>}
+                    <div className="price strikethrough">$ {finalPrice.total}</div>
                 </div>
-                <button className='confirm-order-btns black-btn'>Confirm Order</button>
-                <button className='confirm-order-btns black-btn'>Back</button>
+                <button className='confirm-order-btns black-btn' onClick={onConfirmOrder}>Confirm Order</button>
+                <Link to='/' className='confirm-order-btns black-btn'>Back</Link>
             </div>
         </div>
     );
@@ -81,4 +103,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, null)(OrderConfirm);
+export default connect(mapStateToProps, { confirmOrder })(OrderConfirm);

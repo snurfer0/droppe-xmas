@@ -1,5 +1,5 @@
 import Home from "../components/pages/Home"
-import Checkout from "../components/pages/OrderConfirm"
+import OrderConfirm from "../components/pages/OrderConfirm"
 import Orders from "../components/pages/Orders"
 
 export const _routes = [
@@ -14,8 +14,8 @@ export const _routes = [
         exact: false
     },
     {
-        component: Checkout,
-        path: '/checkout',
+        component: OrderConfirm,
+        path: '/order-confirm',
         exact: false
     }
 ]

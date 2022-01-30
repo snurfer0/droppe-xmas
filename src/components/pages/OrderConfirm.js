@@ -1,44 +1,12 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { calculateFinalPrice } from '../../utils/calculators';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { confirmOrder } from '../../store/actions';
-import { useHistory } from 'react-router-dom';
+import { calculateFinalPrice } from '../../utils/calculators';
+import CartProduct from '../items/CartProduct';
 
 const isEmptyCart = cart => _.sumBy(cart.products, p => p.quantity) === 0 ? true : false
-
-const OrderConfirmTableHead = ({ children, index }) => (
-    <thead >
-        <tr>
-            <th>{children[index]}'s Items</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Item Total</th>
-        </tr>
-    </thead>
-)
-
-const OrderConfirmTableBody = ({ cart, stateProducts }) => (
-    <tbody>
-        {cart.products.map(product => {
-            let { id, price, title } = stateProducts.find(p => p.id === product.productId)
-            let { quantity } = product
-            if (id && quantity !== 0) {
-                return (
-                    <tr key={id}>
-                        <td className='td-title'>{title}</td>
-                        <td>{quantity}</td>
-                        <td>$ {price.toFixed(2)}</td>
-                        <td>$ {(quantity * price).toFixed(2)}</td>
-                    </tr>
-                )
-            }
-        })}
-    </tbody>
-)
-
-
 
 const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
 
@@ -48,47 +16,52 @@ const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
     useEffect(() => {
         if (stateProducts.length && carts) {
             let _finalPrice = calculateFinalPrice(carts, stateProducts)
-            console.log(_finalPrice);
             setFinalPrice(_finalPrice)
         }
-    }, [carts])
+    }, [carts, stateProducts])
 
     const onConfirmOrder = e => {
         e.preventDefault()
-        
-        let _carts = carts.map((cart, index) => {
-            return { childName: children[index], ...cart }
-        })
-
-        let order = {
-            carts: _carts,
-            finalPrice: finalPrice
-        }
-
+        let _carts = carts.map((cart, index) => ({ childName: children[index], ...cart }))
+        let order = { carts: _carts, finalPrice: finalPrice }
         confirmOrder(order)
         history.push('/orders')
     }
 
     return (
-        <div className="container">
+        <div className="container confirm-order">
             {carts.map((cart, index) => {
                 if (!isEmptyCart(cart)) {
                     return (
-                        <table className="table mb-3" key={cart.id}>
-                            <OrderConfirmTableHead {...{ children, index }} />
-                            <OrderConfirmTableBody {...{ cart, stateProducts }} />
-                        </table>
+                        <div className='child-cart'>
+                            <div className='title-wrapper'>
+                                <div className='title'>
+                                    {children[index]}&apos; cart {}
+                                </div>
+                            </div>
+                            {cart.products.map(cartProduct => {
+                                let stateProduct = stateProducts.find(p => p.id === cartProduct.productId)
+                                let { quantity } = cartProduct
+                                if (quantity !== 0) return <CartProduct {...{ cartProduct, stateProduct }} />
+
+                                return <></>
+                            })}
+                        </div>
                     )
                 }
+                return <></>
             })}
-            <div className='order-confirm-total'>
+            <div className='confirm-order-total'>
+                <div className='confirm-order-btns'>
+                    <Link className='confirm-order-btn black-btn' onClick={onConfirmOrder}>Confirm Order</Link>
+                    <Link to='/' className='confirm-order-btn black-btn'>Back</Link>
+                </div>
                 <div className="price-wrapper mr-2">
                     {(finalPrice.rawTotal - finalPrice.total > 0) &&
-                        <div className="old-price">$ {finalPrice.rawTotal}<span className ="strikethrough"></span></div>}
+                        <div className="old-price">$ {finalPrice.rawTotal}<span className="strikethrough"></span></div>}
                     <div className="price strikethrough">$ {finalPrice.total}</div>
                 </div>
-                <button className='confirm-order-btns black-btn' onClick={onConfirmOrder}>Confirm Order</button>
-                <Link to='/' className='confirm-order-btns black-btn'>Back</Link>
+                
             </div>
         </div>
     );

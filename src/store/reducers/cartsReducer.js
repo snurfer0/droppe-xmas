@@ -12,13 +12,12 @@ const cartsReducer = (carts = initialState.carts, action) => {
             return action.payload;
         
         case ADD_QUANTITY:
-            var { cartId, productId } = action.payload
             return carts.map(cart => {
-                    if (cart.id === cartId) {
+                if (cart.id === action.payload.cartId) {
                         return {
                             ...cart,
                             products: cart.products.map(product => {
-                                if (product.productId === productId) {
+                                if (product.productId === action.payload.productId) {
                                     return {
                                         ...product,
                                         quantity: product.quantity + 1
@@ -32,13 +31,12 @@ const cartsReducer = (carts = initialState.carts, action) => {
                 })
         
         case SUBSTRACT_QUANTITY:
-            var { cartId, productId } = action.payload
             return carts.map(cart => {
-                    if (cart.id === cartId) {
+                if (cart.id === action.payload.cartId) {
                         return {
                             ...cart,
                             products: cart.products.map(product => {
-                                if (product.productId === productId) {
+                                if (product.productId === action.payload.productId) {
                                     return {
                                         ...product,
                                         quantity: (product.quantity > 0) ? product.quantity - 1 : product.quantity
@@ -52,13 +50,12 @@ const cartsReducer = (carts = initialState.carts, action) => {
                 })
         
         case DELETE_PRODUCT_FROM_CART:
-            var { cartId, productId } = action.payload
             return carts.map(cart => {
-                    if (cart.id === cartId) {
+                if (cart.id === action.payload.cartId) {
                         return {
                             ...cart,
                             products: cart.products.map(product => {
-                                if (product.productId === productId) {
+                                if (product.productId === action.payload.productId) {
                                     return {
                                         ...product,
                                         quantity: 0

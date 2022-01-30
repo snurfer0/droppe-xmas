@@ -36,7 +36,6 @@ const ChildrenForm = ({ setCartVisibleId, formSubmitted, setFormSubmitted, fetch
 
     const viewChildProducts = e => {
         e.preventDefault()
-        console.log(e.target.innerText);
         let index = childrenNames.indexOf(e.target.innerText)
         setCartVisibleId(index + 1)
     }

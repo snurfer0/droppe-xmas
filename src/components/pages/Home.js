@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import ChildrenForm from '../items/ChildrenForm';
 import ProductList from '../items/ProductList';
@@ -11,7 +11,7 @@ const Home = ({ carts, children }) => {
 
     useEffect(() => {
         if (children.length !== 0 && carts.length !== 0) setFormSubmitted(true)
-    }, [])
+    }, [children.length, carts.length])
 
 
     return (
@@ -20,12 +20,11 @@ const Home = ({ carts, children }) => {
                 <ChildrenForm
                     formSubmitted={formSubmitted}
                     setFormSubmitted={setFormSubmitted}
-                    setCartVisibleId={setCartVisibleId}
-                />
+                    setCartVisibleId={setCartVisibleId}/>
             </div>
             {(carts && formSubmitted) &&
                 carts.filter(c => c.id === cartVisibleId)
-                     .map(cart => <ProductList key={cart.id} { ...{ cart } } />)}
+                    .map(cart => <ProductList key={cart.id} {...{ cart }} />)}
         </div>
     )
 };

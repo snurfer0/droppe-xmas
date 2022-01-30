@@ -1,7 +1,15 @@
+html, body {
+  height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
 @import './scss_files/_childrenForm.scss';
 @import './scss_files/_navbar.scss';
-@import './scss_files/_productList.scss';
+@import './scss_files/_childProductList.scss';
 @import './scss_files/_table.scss';
 @import './scss_files/_loader.scss';
 @import './scss_files/_other.scss';
-@import './scss_files/_accordion.scss';
+@import './scss_files/_orders.scss';

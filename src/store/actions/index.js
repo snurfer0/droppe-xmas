@@ -20,7 +20,6 @@ export const confirmOrder = order => async dispatch => {
         dispatch({ type: constants.CONFIRM_ORDER, payload: order })
     }
 
-    console.log(responses);
     
 } 
 

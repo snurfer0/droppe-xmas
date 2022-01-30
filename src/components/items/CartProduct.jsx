@@ -8,7 +8,7 @@ const CartProduct = ({ cartProduct, stateProduct }) => {
                     <img src={stateProduct.image} alt="product preview" />
                 </div>
                 <div className='product-data'>
-                    <span>{stateProduct.title}</span>
+                    <span className='title'>{stateProduct.title}</span>
                     <small>{stateProduct.category}</small>
                     <small>$ {stateProduct.price.toFixed(2)}</small>
                     <small>Qty. {cartProduct.quantity}</small>

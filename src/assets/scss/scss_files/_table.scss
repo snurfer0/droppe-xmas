@@ -8,6 +8,18 @@
   width: 100% !important;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
+.cart-receipt {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  #cart-confirm-btn {
+      margin-top: 20px;
+      margin: auto;
+  }
+}
+
+
  
 th {
   color:#D5DDE5;;

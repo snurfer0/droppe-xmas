@@ -5,6 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { confirmOrder } from '../../store/actions';
 import { calculateFinalPrice } from '../../utils/calculators';
 import CartProduct from '../items/CartProduct';
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const isEmptyCart = cart => _.sumBy(cart.products, p => p.quantity) === 0 ? true : false
 
@@ -43,18 +45,19 @@ const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
                                 let stateProduct = stateProducts.find(p => p.id === cartProduct.productId)
                                 let { quantity } = cartProduct
                                 if (quantity !== 0) return <CartProduct {...{ cartProduct, stateProduct }} />
-
-                                return <></>
+                                return null
                             })}
                         </div>
                     )
                 }
-                return <></>
+                return null
             })}
             <div className='confirm-order-total'>
                 <div className='confirm-order-btns'>
-                    <Link className='confirm-order-btn black-btn' onClick={onConfirmOrder}>Confirm Order</Link>
                     <Link to='/' className='confirm-order-btn black-btn'>Back</Link>
+                    <Link to="#" className='confirm-order-btn black-btn' onClick={onConfirmOrder}>
+                        Confirm<FontAwesomeIcon className='ml-1 pointer' icon={faArrowAltCircleRight} />
+                    </Link>
                 </div>
                 <div className="price-wrapper mr-2">
                     {(finalPrice.rawTotal - finalPrice.total > 0) &&

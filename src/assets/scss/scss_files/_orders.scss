@@ -43,15 +43,16 @@ $clouds: #ecf0f1;
         }
         &-content {
             max-height: 0;
-            padding: 0 1em;
             color: $mainColor;
             background: white;
             transition: all .35s;
-
+            padding: 0px !important;
+            
             ul {
                 list-style-type: none;
+                padding-inline-start: 0px !important;
+                margin: 20px;
             }
-
             .price-wrapper {
                 float: right;
             }
@@ -109,11 +110,13 @@ $clouds: #ecf0f1;
             height: 70px;
             width: 60px;
         }
-
         .product-data {
             display: flex;
             flex-direction: column;
             margin-left: 20px;
+            .title {
+                width: 230px;
+            }
         }
     }
 
@@ -123,24 +126,24 @@ $clouds: #ecf0f1;
     }
 }
 
-.cart-confirm-btn {
-  float: right;
-  margin-top: 15px;
-  margin-right: 10px;
-}
-
 .confirm-order-total {
-  display: flex;
-  justify-content: space-between;
-}
-.confirm-order-btns {
-  margin-top: 35px;
-}
-
-.confirm-order-btn {
-  width: 140px;
-  height: 40px;
-  margin:10px;
+    display: flex;
+    justify-content: space-between;
+    .confirm-order-btns {
+        display: flex;
+        flex-direction: column;
+        margin-top: 35px;
+        .confirm-order-btn {
+            margin-top: 15px;
+            width: 11 0px;
+            vertical-align: middle;
+            height: 20px;
+            margin:10px;
+        }
+    }
+    .price-wrapper {
+        margin-top: 55px;
+    }
 }
 
 

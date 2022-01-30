@@ -5,59 +5,49 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { calculateCartFinalPrice } from '../../utils/calculators.js';
 
-const CartReceiptTableRow = ({ cartProduct, quantity }) => {
-    return (
-        <tr key={cartProduct.id}>
-            <td>{cartProduct.title}</td>
-            <td>{quantity}</td>
-            <td>$ {cartProduct.price.toFixed(2)}</td>
-            <td>$ {(quantity * cartProduct.price).toFixed(2)}</td>
+const CartReceiptTableRow = ({ cartProduct, quantity }) => (
+    <tr key={cartProduct.id}>
+        <td>{cartProduct.title}</td>
+        <td>{quantity}</td>
+        <td>$ {cartProduct.price.toFixed(2)}</td>
+        <td>$ {(quantity * cartProduct.price).toFixed(2)}</td>
+    </tr>
+)
+
+
+const CartReceiptTableHeader = () =>  (
+    <thead>
+        <tr>
+            <th>Item Details</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
         </tr>
-    )
-}
+    </thead>
+)
 
-const CartReceiptTableHeader = () => {
-    return (
-        <thead>
-            <tr>
-                <th>Item Details</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-    )
-}
 
-const CartReceiptTableBody = ({ cart, cartProducts, stateProducts }) => {
-    return (
-        <tbody className="table-hover">
-            {cartProducts.map(cartProduct => {
-                let product = stateProducts.find(p => p.id === cartProduct.id)
-                let { quantity } = cart.products.find(p => p.productId === cartProduct.id)
-                if (quantity > 0) return <CartReceiptTableRow key={product.id} {...{ cartProduct, quantity }} />
-            })}
-        </tbody>
-    )
-}
+const CartReceiptTableBody = ({ cart, cartProducts, stateProducts }) => (
+    <tbody className="table-hover">
+        {cartProducts.map(cartProduct => {
+            let product = stateProducts.find(p => p.id === cartProduct.id)
+            let { quantity } = cart.products.find(p => p.productId === cartProduct.id)
+            if (quantity > 0) return <CartReceiptTableRow key={product.id} {...{ cartProduct, quantity }} />
+        })}
+    </tbody>
+)
 
-const CartReceiptTableFooter = ({ finalPrice }) => {
-    return (
-        <tfoot className='table-footer'>
-            <tr>
-                <td colSpan="3">Cart Total:</td>
-                <td>
-                    $ {finalPrice}
-                </td>
-            </tr>
 
-        </tfoot>
-    )
-}
+const CartReceiptTableFooter = ({ finalPrice }) =>(
+    <tfoot className='table-footer'>
+        <tr>
+            <td colSpan="3">Cart Total:</td>
+            <td>$ {finalPrice}</td>
+        </tr>
+    </tfoot>
+)
 
-const CartReceipt = props => {
-
-    let { cart, stateProducts, carts } = props
+const CartReceipt = ({ cart, stateProducts, carts }) => {
 
     const [cartProducts, setCartProducts] = useState(null)
     const [finalPrice, setFinalPrice] = useState(0)
@@ -78,19 +68,19 @@ const CartReceipt = props => {
         }
     }, [cart, cartProducts])
 
-    if (!cartProducts) return <></>
+    if (!cartProducts) return null
 
     return (
-        <>
+        <div className='cart-receipt'>
             <table className="table">
                 <CartReceiptTableHeader />
                 <CartReceiptTableBody {...{ stateProducts, cart, cartProducts }} />
                 <CartReceiptTableFooter {...{ finalPrice }} />
             </table>
-            <Link to='/order-confirm' className='black-btn cart-confirm-btn'>
+            <Link to='/order-confirm' id='cart-confirm-btn' className='black-btn'>
                 Confirm<FontAwesomeIcon className='ml-1 pointer' icon={faArrowAltCircleRight} />
             </Link>
-        </>
+        </div>
     );
 };
 

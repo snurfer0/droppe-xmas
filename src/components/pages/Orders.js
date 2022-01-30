@@ -54,7 +54,7 @@ const Orders = ({ orders, stateProducts }) => {
         <div className="container accordions">
             <h2>Your <b>Orders</b></h2>
             <div className="tabs">
-                {orders.map(order => <OrderTab {...{order, stateProducts}}/>)}
+                {orders.map(order => <OrderTab key={order.id} {...{order, stateProducts}}/>)}
             </div>
         </div>
     );

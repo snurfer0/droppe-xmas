@@ -1,6 +1,15 @@
-# Getting Started with Create React App
+# Project Requirements
 
-This project was bootstrapped with [Create React App]
+1. The user should be able to input a name for each child.
+2. The user should be able to pull 5 carts from the API (one per child).
+3. The user should be able to view all carts as well as carts products.
+4. The user should be able to add/substract quantity for a cart product.
+5. The user should be able to view the total price of the cart and total price for all carts.
+6. The user should get a discount if there are identical products on different carts
+    - 2 identical products chosen => 20% reduction for the sum of those two items
+    - 3 identical products chosen => 30% reduction for the sum of those three items
+7. The user should be able to view the order confirmation screen that displays all products and carts.
+8. The user should be able to place the order and view it later if required so.
 
 ## Starting the project
 

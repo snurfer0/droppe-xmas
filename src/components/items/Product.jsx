@@ -34,7 +34,7 @@ const Product = props => (
                     className='ml-1 pointer'
                     icon={faPlus}
                     onClick={() => props.addQuantity(props.cart.id, props.id)}/>
-                {props.cart.products.find(p => p.productId === props.id).quantity.quantity > 0
+                {props.carts.find(c => c.id === props.cart.id).products.find(p => p.productId === props.id).quantity > 0
                     && <FontAwesomeIcon
                         data-test='delete-icon'
                         className='pointer ml-1'

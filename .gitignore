@@ -8,6 +8,7 @@
 # testing
 /coverage
 
+
 # production
 /build
 
@@ -24,4 +25,7 @@ yarn-error.log*
 
 # environments
 .env
+
+# eslint
+
 

@@ -4,30 +4,20 @@ import _ from 'lodash'
 
 const api = axios.create({ baseURL: "https://fakestoreapi.com" });
 
-// Cannot send data to the API, no available endpoint
+// Cannot send data to the API, no available endpoint, saving data to the redux store instead
 export const confirmOrder = order => async dispatch => {
-
     let requests = []
     let responses = []
     let resFlag = true
-
     order.carts.forEach(cart => requests.push(api.post('/carts', {cart})))
-
     responses = await Promise.all(requests)
     responses.forEach(res => res.status === 200 ? null : resFlag = false)
-
-    if (resFlag) {
-        dispatch({ type: constants.CONFIRM_ORDER, payload: order })
-    }
-
-    
+    if (resFlag) dispatch({ type: constants.CONFIRM_ORDER, payload: order })
 } 
 
 export const fetchCarts = () => async dispatch => {
     const response = await api.get('/carts?limit=5').catch(err => console.error(err));
-    if (response.status === 200) {
-        dispatch({ type: constants.FETCH_CARTS, payload: response.data })
-    }
+    if (response.status === 200) dispatch({ type: constants.FETCH_CARTS, payload: response.data })
     let ids = response.data.map(cart => cart.products.map(p => p.productId));
     ids = ids.reduce((previousValue, currentValue) => previousValue.concat(currentValue), [])
     ids = _.uniq(ids)

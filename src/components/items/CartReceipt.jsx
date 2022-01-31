@@ -33,6 +33,7 @@ const CartReceiptTableBody = ({ cart, cartProducts, stateProducts }) => (
             let product = stateProducts.find(p => p.id === cartProduct.id)
             let { quantity } = cart.products.find(p => p.productId === cartProduct.id)
             if (quantity > 0) return <CartReceiptTableRow key={product.id} {...{ cartProduct, quantity }} />
+            return null
         })}
     </tbody>
 )
@@ -66,7 +67,7 @@ const CartReceipt = ({ cart, stateProducts, carts }) => {
             let fp = calculateCartFinalPrice(cart.id, carts, stateProducts)
             setFinalPrice(fp)
         }
-    }, [cart, cartProducts])
+    }, [cart, carts, cartProducts, stateProducts])
 
     if (!cartProducts) return null
 

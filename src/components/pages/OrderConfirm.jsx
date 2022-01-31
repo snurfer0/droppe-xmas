@@ -1,3 +1,5 @@
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
@@ -5,10 +7,35 @@ import { Link, useHistory } from 'react-router-dom';
 import { confirmOrder } from '../../store/actions';
 import { calculateFinalPrice } from '../../utils/calculators';
 import CartProduct from '../items/CartProduct';
-import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const isEmptyCart = cart => _.sumBy(cart.products, p => p.quantity) === 0 ? true : false
+
+const CartProductsList = ({ cart, stateProducts }) => {
+    return cart.products.map(cartProduct => {
+        let stateProduct = stateProducts.find(p => p.id === cartProduct.productId)
+        let { quantity } = cartProduct
+        if (quantity !== 0) return <CartProduct {...{ cartProduct, stateProduct }} />
+        return null
+    })
+}
+
+const CartsList = ({ carts, stateProducts, children }) => {
+    return carts.map((cart, index) => {
+        if (!isEmptyCart(cart)) {
+            return (
+                <div className='child-cart'>
+                    <div className='title-wrapper'>
+                        <div className='title'>
+                            {children[index]}&apos; cart
+                        </div>
+                    </div>
+                   <CartProductsList {...{cart, stateProducts}} />
+                </div>
+            )
+        }
+        return null
+    })
+}
 
 const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
 
@@ -32,26 +59,7 @@ const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
 
     return (
         <div className="container confirm-order">
-            {carts.map((cart, index) => {
-                if (!isEmptyCart(cart)) {
-                    return (
-                        <div className='child-cart'>
-                            <div className='title-wrapper'>
-                                <div className='title'>
-                                    {children[index]}&apos; cart {}
-                                </div>
-                            </div>
-                            {cart.products.map(cartProduct => {
-                                let stateProduct = stateProducts.find(p => p.id === cartProduct.productId)
-                                let { quantity } = cartProduct
-                                if (quantity !== 0) return <CartProduct {...{ cartProduct, stateProduct }} />
-                                return null
-                            })}
-                        </div>
-                    )
-                }
-                return null
-            })}
+            <CartsList {...{carts, stateProducts, children}} />
             <div className='confirm-order-total'>
                 <div className='confirm-order-btns'>
                     <Link to='/' className='confirm-order-btn black-btn'>Back</Link>
@@ -64,7 +72,6 @@ const OrderConfirm = ({ stateProducts, carts, children, confirmOrder }) => {
                         <div className="old-price">$ {finalPrice.rawTotal}<span className="strikethrough"></span></div>}
                     <div className="price strikethrough">$ {finalPrice.total}</div>
                 </div>
-                
             </div>
         </div>
     );

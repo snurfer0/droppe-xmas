@@ -4,7 +4,7 @@ import { DUMMY_NAMES } from '../../utils/constants';
 import { CHILDREN_INPUT_LABELS } from '../../utils/constants';
 import { fetchCarts, storeChildrenInState } from '../../store/actions';
 
-const NameInput = ({ placeholder,  onChange, value }) => <input type="text" name="childName" onChange={onChange} placeholder={placeholder} value={value} required />
+const NameInput = ({ placeholder,  onChange }) => <input type="text" name="childName" onChange={onChange} placeholder={placeholder} required />
 const NameButton = ({ childName, onClick }) => <button className='grow_on_hover' type='submit' onClick={onClick}>{childName}</button>
 
 const ChildNameInputs = ({ childrenNames, onNameChange }) => {

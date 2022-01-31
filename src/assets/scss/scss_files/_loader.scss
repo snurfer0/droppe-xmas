@@ -5,12 +5,15 @@
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid black; /* Blue */
   border-radius: 50%;
-  width: 120px;
-  margin-left: 20%;
-  margin-top: 10%;
-  height: 120px;
+  width: 60px;
+  height: 60px;
   animation: spin 2s linear infinite;
   position: absolute;
+  margin:auto;
+  top:48.5%;
+  left:48.5%;
+  
+
 }
 
 @keyframes spin {

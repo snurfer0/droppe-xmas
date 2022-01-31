@@ -1,9 +1,8 @@
+import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import CartReceipt from './CartReceipt';
-import Loading from './Loading';
 import Product from './Product';
-import _ from 'lodash'
 
 const ProductList = ({ cart, carts, stateProducts }) => {
 
@@ -20,23 +19,17 @@ const ProductList = ({ cart, carts, stateProducts }) => {
         setReceiptVisible(false)
       }
     }
-  }, [cart])
+  }, [cart, carts])
 
-  if (!cart || !stateProducts.length) return <Loading />
-
-  return (
-    <>
-      <div className='products-inline'>
-        {cart && cart.products.map(p => {
-          let product = stateProducts.find(_p => _p.id === p.productId)
-          if (product) {
-            return <Product key={product.id} cart={cart} {...product} />
-          }
-        })}
-      </div>
-      {receiptVisible && <CartReceipt cart={cart} />}
-    </>
-  )
+  return <>
+    <div className='products-inline'>
+      {cart && cart.products.map(p => {
+        let product = stateProducts.find(_p => _p.id === p.productId)
+        return <Product key={product.id} cart={cart} {...product} />
+      })}
+    </div>
+    {receiptVisible && <CartReceipt cart={cart} />}
+  </>
 }
 
 
